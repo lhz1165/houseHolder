@@ -21,6 +21,7 @@
 
 
     <el-container>
+<!--      aside-->
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
         <el-menu :default-openeds="['1', '2','3']">
           <el-submenu index="1">
@@ -62,15 +63,19 @@
           </el-submenu>
         </el-menu>
       </el-aside>
+
       <el-container>
         <el-main>
           <router-view></router-view>
         </el-main>
-        <el-foot>Footer</el-foot>
+
       </el-container>
-
     </el-container>
-
+    <el-footer>
+      <div>
+        @Copyright 2022 hello
+      </div>
+    </el-footer>
   </el-container>
 </div>
 </template>
@@ -100,5 +105,14 @@ export default {
 
 .el-aside {
   color: #333;
+}
+
+
+
+.el-footer {
+  background-color: #B3C0D1;
+  color: #333;
+  text-align: center;
+  line-height: 60px;
 }
 </style>
