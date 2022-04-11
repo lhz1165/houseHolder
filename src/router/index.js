@@ -6,6 +6,8 @@ import houseHolder from "@/components/HouseHolder";
 import personal from "@/components/Personal";
 import profile from "@/components/Profile";
 import notFound from "@/views/NotFound";
+import avatar from "@/components/Avatar";
+import houserHolderInfo from "@/components/HouserHolderInfo";
 Vue.use(VueRouter)
 
 const routes = [
@@ -36,7 +38,12 @@ const routes = [
     children: [
       {
         path: '/index/houseHolder',
-        component: houseHolder
+        component: houseHolder,
+      },
+      {
+        path:'/index/houseHolder/info',
+        name:"houseHolderInfo",
+        component:houserHolderInfo,
       },
       {
         path: '/index/personal/:id',
@@ -48,6 +55,12 @@ const routes = [
         path: '/index/profile',
         name:"profile",
         component: profile,
+        props:true
+      },
+      {
+        path: '/index/avatar',
+        name:"avatar",
+        component: avatar,
         props:true
       },
 
