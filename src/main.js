@@ -4,11 +4,34 @@ import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import axios from 'axios'
+import Vuex from "vuex";
+import store from "@/store";
+
 
 Vue.use(ElementUI);
+Vue.use(Vuex)
+
 Vue.config.productionTip = false
 Vue.prototype.axios=axios
+
+
+router.beforeEach((to,from,next)=>{
+  let isLogin = window.sessionStorage.getItem("isLogin");
+  if (to.path==='/logout'){
+    window.sessionStorage.clear();
+    next('/login')
+  }else if(to.path==='/login'){
+    if (isLogin != null) {
+      next('/index')
+    }
+  }else if(isLogin===null){
+    next('/login')
+  }
+  next();
+})
+
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')

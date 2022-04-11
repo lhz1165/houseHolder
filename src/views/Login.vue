@@ -41,7 +41,12 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-         //跳转
+         //登录拦截
+          window.sessionStorage.setItem('isLogin','true')
+          this.$store.dispatch('asyncUpdateUser',{
+            name:this.form.username
+          })
+          //跳转
           this.$router.push({name:"main",params:{username: this.form.username}})
         } else {
           console.log('error submit!!');

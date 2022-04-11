@@ -14,7 +14,7 @@
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <span>{{this.$route.params.username}}</span>
+      <span>{{$store.getters.getUser.name}}</span>
     </el-header>
 
 
