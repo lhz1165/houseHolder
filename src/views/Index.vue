@@ -2,19 +2,25 @@
 <div>
   <el-container style="height: 900px; border: 1px solid #eee">
 
-    <el-header style="text-align: right; font-size: 12px">
-      <el-dropdown>
-        <i class="el-icon-setting" style="margin-right: 15px"></i>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>查看</el-dropdown-item>
-          <el-dropdown-item>新增</el-dropdown-item>
-          <el-dropdown-item>
-            <router-link to="/logout" tag="span">退出</router-link>
 
+<!--    <el-header style="text-align: right; font-size: 12px" class="homeHeader">-->
+    <el-header style=" font-size: 12px" class="homeHeader">
+      <div class="title">户籍管理</div>
+      <el-dropdown class="el-dropdown-link" @command="commandHandler">
+        <span >
+          {{user.username}}
+          <img  class="info-pic" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" alt="">
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="profile">个人中心</el-dropdown-item>
+          <el-dropdown-item command="setting">设置</el-dropdown-item>
+          <el-dropdown-item command="logout">
+            退出
+<!--            <router-link to="/logout" tag="span"></router-link>-->
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <span>{{user.username}}</span>
+
     </el-header>
 
 
@@ -107,6 +113,19 @@ export default {
           this.user=resp.data.data;
         }
       })
+    },
+    commandHandler(command){
+      if (command === "logout") {
+        axios.post("http://localhost:8089/logout")
+        .then(resp=>{
+          if (resp.data.code===200){
+            this.$message.success('退出成功!')
+            window.sessionStorage.clear()
+            console.log("log out")
+            this.$router.replace("/")
+          }
+        })
+      }
     }
   },
 }
@@ -131,4 +150,22 @@ export default {
   text-align: center;
   line-height: 60px;
 }
+.homeHeader{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+.homeHeader .title{
+    font-size: 30px;
+  color: white;
+}
+.info-pic{
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
 </style>
