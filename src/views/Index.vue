@@ -14,7 +14,7 @@
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <span>{{$store.getters.getUser.name}}</span>
+      <span>{{user.username}}</span>
     </el-header>
 
 
@@ -81,6 +81,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Index",
   data() {
@@ -90,9 +92,23 @@ export default {
       address: '上海市普陀区金沙江路 1518 弄'
     };
     return {
-      tableData: Array(20).fill(item)
+      tableData: Array(20).fill(item),
+      user:''
     }
-  }
+  },
+  mounted() {
+   this.getUserInfo()
+  },
+  methods:{
+    getUserInfo(){
+      axios.post('http://localhost:8089/getUserInfo')
+      .then(resp=>{
+        if (resp.data.code===200){
+          this.user=resp.data.data;
+        }
+      })
+    }
+  },
 }
 </script>
 

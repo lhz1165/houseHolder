@@ -58,10 +58,12 @@ export default {
                   this.$message.success('登录成功!')
                   //跳转
                   window.sessionStorage.setItem('isLogin','true')
-                  this.$store.dispatch('asyncUpdateUser',{
-                    name:this.form.username
-                  })
+                  window.sessionStorage.setItem('token',successResponse.data.data)
+                  // this.$store.dispatch('asyncUpdateUser',{
+                  //   name:this.form.username
+                  // })
                   //验证
+                  console.log(successResponse.data.data)
                   this.$router.push({name:"main",params:{username: this.form.username}})
 
                 } else {
