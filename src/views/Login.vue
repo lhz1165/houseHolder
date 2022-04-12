@@ -8,6 +8,13 @@
       <el-form-item label="密码" prop="password">
         <el-input  type="password" v-model="form.password"></el-input>
       </el-form-item>
+      <el-form-item label="用户类型">
+        <el-select v-model="form.type" placeholder="活动区域">
+          <el-option label="管理员"  value="1" ></el-option>
+          <el-option label="普通用户"  value="2"></el-option>
+        </el-select>
+      </el-form-item>
+
       <el-form-item>
     <!-- 对ruleForm 这个表单做验证-->
         <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
@@ -19,6 +26,8 @@
 </template>
 
 <script>
+import {postRequest} from "@/utils/apis";
+import axios from "axios";
 export default {
   name: "Login",
   data(){
@@ -26,6 +35,7 @@ export default {
       form:{
         username:'',
         password:'',
+        type:'1',
       },
       rules: {
         username: [
@@ -42,21 +52,35 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
          //登录拦截
-          window.sessionStorage.setItem('isLogin','true')
-          this.$store.dispatch('asyncUpdateUser',{
-            name:this.form.username
+          axios.post('http://localhost:8089/login',{username: this.form.username, password: this.form.password,type:this.form.type})
+              .then(successResponse => {
+                if (successResponse.data.code === 200) {
+                  this.$message.success('登录成功!')
+                  //跳转
+                  window.sessionStorage.setItem('isLogin','true')
+                  this.$store.dispatch('asyncUpdateUser',{
+                    name:this.form.username
+                  })
+                  //验证
+                  this.$router.push({name:"main",params:{username: this.form.username}})
+
+                } else {
+                  this.$message.error('账号或者密码错误!')
+                  console.log("dk")
+                  //{code :"",data:}
+                  console.log(successResponse.data)
+
+                }
+              }).catch(failResponse => {
+            console.log(failResponse)
+            this.$message.warning('登录失败！')
           })
-          //跳转
-          this.$router.push({name:"main",params:{username: this.form.username}})
         } else {
           console.log('error submit!!');
           return false;
         }
       });
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
-    }
   }
 }
 </script>

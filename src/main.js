@@ -22,7 +22,7 @@ router.beforeEach((to,from,next)=>{
     next('/login')
   }else if(to.path==='/login'){
     if (isLogin != null) {
-      next('/index')
+      next('/index/aaa')
     }
   }else if(isLogin===null){
     next('/login')
