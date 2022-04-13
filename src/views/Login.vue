@@ -52,11 +52,13 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
          //登录拦截
-          axios.post('http://localhost:8089/login',{username: this.form.username, password: this.form.password,type:this.form.type})
+         // axios.post('http://localhost:8089/login',{username: this.form.username, password: this.form.password,type:this.form.type})
+          postRequest('/login',{username: this.form.username, password: this.form.password,type:this.form.type})
               .then(successResponse => {
                 if (successResponse.data.code === 200) {
                   this.$message.success('登录成功!')
                   //跳转
+                  window.sessionStorage.clear();
                   window.sessionStorage.setItem('isLogin','true')
                   window.sessionStorage.setItem('token',successResponse.data.data)
                   // this.$store.dispatch('asyncUpdateUser',{
@@ -65,12 +67,11 @@ export default {
                   //验证
                   console.log(successResponse.data.data)
                   this.$router.push({name:"main",params:{username: this.form.username}})
-
                 } else {
                   this.$message.error('账号或者密码错误!')
                   console.log("dk")
                   //{code :"",data:}
-                  console.log(successResponse.data)
+                  //console.log(successResponse.data)
 
                 }
               }).catch(failResponse => {

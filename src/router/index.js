@@ -8,6 +8,8 @@ import profile from "@/components/Profile";
 import notFound from "@/views/NotFound";
 import avatar from "@/components/Avatar";
 import houserHolderInfo from "@/components/HouserHolderInfo";
+import comment from "@/components/Comment";
+import commentInfo from "@/components/CommentInfo";
 Vue.use(VueRouter)
 
 const routes = [
@@ -58,9 +60,21 @@ const routes = [
         props:true
       },
       {
+        path: '/index/comment',
+        name:"comment",
+        component: comment,
+        props:true
+      },
+      {
         path: '/index/avatar',
         name:"avatar",
         component: avatar,
+        props:true
+      },
+      {
+        path: '/index/commentInfo',
+        name:"commentInfo",
+        component: commentInfo,
         props:true
       },
 
