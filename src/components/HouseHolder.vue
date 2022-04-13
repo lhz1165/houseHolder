@@ -105,11 +105,13 @@ export default {
 .searchbtn{
   margin-left: 50px;
 }
-.el-pagination{
-  margin-top: 50px;
-  margin-left: 100px;
-
-
+.el-pagination {
+  position: fixed;
+  left: 50px;
+  bottom: 100px;
+  height: 40px;
+  width: 100%;
+  text-align: center;
 }
 
 </style>

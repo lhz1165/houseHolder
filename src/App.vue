@@ -19,5 +19,9 @@ export default {
 }
 </script>
 <style>
-
+html,body,.el-container{
+  padding: 0px;
+  margin: 0px;
+  height: 100%;
+}
 </style>

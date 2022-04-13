@@ -10,6 +10,7 @@ import avatar from "@/components/Avatar";
 import houserHolderInfo from "@/components/HouserHolderInfo";
 import comment from "@/components/Comment";
 import commentInfo from "@/components/CommentInfo";
+import addCommentInfo from "@/components/AddCommentInfo";
 Vue.use(VueRouter)
 
 const routes = [
@@ -75,6 +76,12 @@ const routes = [
         path: '/index/commentInfo',
         name:"commentInfo",
         component: commentInfo,
+        props:true
+      },
+      {
+        path: '/index/addComment',
+        name:"addCommentInfo",
+        component: addCommentInfo,
         props:true
       },
 

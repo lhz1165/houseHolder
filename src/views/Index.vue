@@ -1,6 +1,7 @@
 <template>
-<div>
-  <el-container style="height: 900px; border: 1px solid #eee">
+<div class="homeWrapper">
+<!--  <el-container style=" border: 1px solid #eee">-->
+  <el-container class="main_container">
 
 
 <!--    <el-header style="text-align: right; font-size: 12px" class="homeHeader">-->
@@ -29,7 +30,7 @@
     <el-container>
 <!--      aside-->
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-        <el-menu :default-openeds="['1', '2','3']">
+        <el-menu :default-openeds="['1', '2','3','4','5']">
           <el-submenu index="1">
             <template slot="title"><i class="el-icon-message"></i>系统用户管理</template>
             <el-menu-item-group>
@@ -67,14 +68,14 @@
           </el-submenu>
 
 
-          <el-submenu index="5">
-            <template slot="title"><i class="el-icon-setting"></i>test</template>
-            <el-menu-item-group >
-              <el-menu-item index="1-2">
-                <router-link to="/index/avatar" >test</router-link>
-              </el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
+<!--          <el-submenu index="5">-->
+<!--            <template slot="title"><i class="el-icon-setting"></i>test</template>-->
+<!--            <el-menu-item-group >-->
+<!--              <el-menu-item index="1-2">-->
+<!--                <router-link to="/index/avatar" >test</router-link>-->
+<!--              </el-menu-item>-->
+<!--            </el-menu-item-group>-->
+<!--          </el-submenu>-->
         </el-menu>
 
       </el-aside>
@@ -180,6 +181,16 @@ export default {
   height: 40px;
   border-radius: 10px;
   margin-top: 20px;
+}
+.homeWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.main_container {
+  height: 100%;
 }
 
 </style>

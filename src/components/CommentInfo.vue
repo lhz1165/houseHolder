@@ -1,7 +1,5 @@
 <template>
   <div>
-    aaa{{cid}}
-    bbbb
     <el-form ref="form"   class="myForm">
       <el-descriptions title="反馈详情">
         <el-descriptions-item label="用户名">{{username}}</el-descriptions-item>
@@ -86,8 +84,10 @@ export default {
           this.title=obj.title;
           this.content=obj.content;
           this.reply=obj.reply;
-          this.replyTime=(new Date(parseInt(obj.replyTime)).toLocaleString());
           this.time=(new Date(parseInt(obj.createTime)).toLocaleString());
+          if (obj.replyTime != null) {
+            this.replyTime=(new Date(parseInt(obj.replyTime)).toLocaleString());
+          }
         }
       });
       if (window.sessionStorage.getItem("user") != null) {

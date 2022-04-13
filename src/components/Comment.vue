@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div class="addComm">
+      <el-button type="primary" icon="el-icon-circle-plus" @click="addComment()">新增评论</el-button>
+
+    </div>
     <el-table
         :data="list"
         border
@@ -43,15 +47,25 @@
       </el-table-column>
     </el-table>
 
-    <el-pagination
-        class="pagination"
-        background
-        layout="prev, pager, next"
-        :pageSize="pageSize"
-        :total="total"
-        @current-change="change"
-    >
-    </el-pagination>
+<!--    <el-pagination-->
+<!--        class="pagination"-->
+<!--        background-->
+<!--        layout="prev, pager, next"-->
+<!--        :pageSize="pageSize"-->
+<!--        :total="total"-->
+<!--        @current-change="change">-->
+<!--    </el-pagination>-->
+    <div class="pageP">
+      <el-pagination
+          class="pagination"
+          background
+          layout="prev, pager, next"
+          :pageSize="pageSize"
+          :total="total"
+          @current-change="change">
+      </el-pagination>
+    </div>
+
 
 
   </div>
@@ -120,13 +134,14 @@ export default {
           setTimeout(() =>{
             window.location.reload();
           },500);
-
         }else {
-
           this.$message.error('删除失败')
         }
       })
 
+    },
+    addComment(){
+      this.$router.replace("/index/addComment")
     }
   }
 }
@@ -134,5 +149,19 @@ export default {
 
 <style scoped>
 
-
+.addComm{
+  margin-left: 1000px;
+  margin-bottom: 20px;
+}
+.pagination {
+  position: fixed;
+  left: 50px;
+  bottom: 100px;
+  height: 40px;
+  width: 100%;
+  text-align: center;
+}
+/*.pageP{*/
+/*  margin-bottom: 50px;*/
+/*}*/
 </style>
