@@ -36,13 +36,11 @@
           <el-submenu index="2">
             <template slot="title"><i class="el-icon-menu"></i>户籍管理</template>
             <el-menu-item-group>
-
               <el-menu-item index="1-2">
                 <router-link to="/index/houseHolder" tag="label">户籍管理</router-link>
               </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-
 
           <el-submenu index="3">
             <template slot="title"><i class="el-icon-setting"></i>个人户籍管理</template>
@@ -54,6 +52,16 @@
           </el-submenu>
 
           <el-submenu index="4">
+            <template slot="title"><i class="el-icon-setting"></i>反馈投诉</template>
+            <el-menu-item-group >
+              <el-menu-item index="1-2">
+                <router-link to="/index/comment" tag="label">反馈投诉</router-link>
+              </el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+
+
+          <el-submenu index="5">
             <template slot="title"><i class="el-icon-setting"></i>test</template>
             <el-menu-item-group >
               <el-menu-item index="1-2">
@@ -62,6 +70,7 @@
             </el-menu-item-group>
           </el-submenu>
         </el-menu>
+
       </el-aside>
 
       <el-container>
@@ -82,6 +91,7 @@
 
 <script>
 import axios from "axios";
+import {postRequest} from "@/utils/apis";
 
 export default {
   name: "Index",
@@ -101,10 +111,14 @@ export default {
   },
   methods:{
     getUserInfo(){
-      axios.post('http://localhost:8089/getUserInfo')
+      postRequest('/getUserInfo')
       .then(resp=>{
         if (resp.data.code===200){
           this.user=resp.data.data;
+          if (window.sessionStorage.getItem("user")===null){
+            window.sessionStorage.setItem("user",JSON.stringify(resp.data.data))
+          }
+
         }
       })
     }

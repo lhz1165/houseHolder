@@ -43,11 +43,10 @@ axios.interceptors.request.use(config => {
 // }
 // )
 
-
-let base = 'http://localhost:8089'
+axios.defaults.baseURL = 'http://localhost:8089'
 export const postRequest=(url,params)=>{
     return axios({
-        method:"post",
+        method:'post',
         url:url,
         data:params
     })
@@ -55,7 +54,7 @@ export const postRequest=(url,params)=>{
 export const getRequest=(url,params)=>{
     return axios({
         method:"get",
-        url:`${base}${url}`,
-        data:params
+        url:url,
+        params:params
     })
 }
