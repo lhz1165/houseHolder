@@ -1,18 +1,18 @@
 <template>
 <div>
-  系统管理员 id = {{querb.id}}
-
 
 
   <el-form ref="form" :model="form" label-width="80px">
     <div class="myavatar">
       <el-upload
           class="avatar-uploader"
-          action="https://jsonplaceholder.typicode.com/posts/"
-          :show-file-list="false"
+          action="http://localhost:8089/upload"
           :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload">
-        <img v-if="form.url" :src="form.url" class="avatar">
+          :before-upload="beforeAvatarUpload"
+          :headers="headers"
+          >
+<!--    上传传参    :data="param"-->
+        <img v-if="picName" :src="picName" class="avatar">
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
       </el-upload>
     </div>
@@ -30,7 +30,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">立即创建</el-button>
+        <el-button type="primary" @click="onSubmit">更新</el-button>
         <el-button>取消</el-button>
       </el-form-item>
     </div>
@@ -41,55 +41,66 @@
 </template>
 
 <script>
+import {getRequest, postRequest} from "@/utils/apis";
+
 export default {
   name: "UserInfo",
   data() {
     return {
       form: {
-        name: '',
-        password: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: '',
-        url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+      },
+      headers: {
+        'token': window.sessionStorage.getItem("token")
+      },
+      picName:'',
+      //用户更新的参数
+      userParam:{
+        id:0,
+        picAddr:'',
       }
     }
   },
-  beforeRouteEnter:(to,from,next)=>{
-    next(vm => {
-      vm.getData();
-    })
-  },
-  computed:{
-    querb(){
-      return this.$route.query
-    }
+  mounted() {
+    this.loadAvatar();
+    let userObj =JSON.parse(window.sessionStorage.getItem("user"))
+    this.userParam.id=userObj.id
+    this.userParam.picAddr=userObj.avatar
   },
   methods:{
-    getData(){
-      this.axios({
-        method:'get',
-        url:'http://localhost:8080/data.json'
-      }).then((resp)=>{
-        console.log(resp)
-      }).catch(error=>{
-        console.log(error)
-      })
+    //初始化头像
+    loadAvatar(){
+        postRequest('/getUserInfo')
+            .then(resp=>{
+              if (resp.data.code===200){
+                this.picName= "http://localhost:8089"+resp.data.data.avatar
+              }
+            })
     },
     onSubmit() {
-      console.log('submit!');
+      console.log(this.userParam)
+     postRequest("/user/update",this.userParam)
+      .then(resp=>{
+        if (resp.data.code === 200) {
+          this.$message.success("更新成功!")
+          this.picName= "http://localhost:8089"+this.userParam.picAddr
+        }
+      })
+      this.$router.go(0)
     },
+
     handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
+      console.log(res)
+      if (res.code===200){
+        this.userParam.picAddr=res.data
+        console.log(this.userParam)
+        this.$message.success("上传成功!")
+      }else {
+        this.$message.error("上传失败!")
+      }
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg';
       const isLt2M = file.size / 1024 / 1024 < 2;
-
       if (!isJPG) {
         this.$message.error('上传头像图片只能是 JPG 格式!');
       }

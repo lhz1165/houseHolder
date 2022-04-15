@@ -10,7 +10,7 @@
       <el-dropdown class="el-dropdown-link" @command="commandHandler">
         <span >
           {{user.username}}
-          <img  class="info-pic" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" alt="">
+          <img  class="info-pic" :src="'http://localhost:8089'+user.avatar" alt="">
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="profile">个人中心</el-dropdown-item>
@@ -122,10 +122,8 @@ export default {
       .then(resp=>{
         if (resp.data.code===200){
           this.user=resp.data.data;
-          if (window.sessionStorage.getItem("user")===null){
-            window.sessionStorage.setItem("user",JSON.stringify(resp.data.data))
-          }
-
+          window.sessionStorage.removeItem("user")
+          window.sessionStorage.setItem("user",JSON.stringify(resp.data.data))
         }
       })
     },
