@@ -66,7 +66,7 @@ export default {
                   // })
                   //验证
                   console.log(successResponse.data.data)
-                  this.$router.push({name:"main",params:{username: this.form.username}})
+                  this.$router.push({name:"main"})
                 } else {
                   this.$message.error('账号或者密码错误!')
                   console.log("dk")

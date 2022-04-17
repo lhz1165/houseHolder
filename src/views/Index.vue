@@ -2,9 +2,6 @@
 <div class="homeWrapper">
 <!--  <el-container style=" border: 1px solid #eee">-->
   <el-container class="main_container">
-
-
-<!--    <el-header style="text-align: right; font-size: 12px" class="homeHeader">-->
     <el-header style=" font-size: 12px" class="homeHeader">
       <div class="title">户籍管理</div>
       <el-dropdown class="el-dropdown-link" @command="commandHandler">
@@ -17,49 +14,86 @@
           <el-dropdown-item command="setting">设置</el-dropdown-item>
           <el-dropdown-item command="logout">
             退出
-<!--            <router-link to="/logout" tag="span"></router-link>-->
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-
     </el-header>
 
 
 
 
     <el-container>
-<!--      aside-->
-      <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-        <el-menu :default-openeds="['1', '2','3','4','5']">
+
+<!--      管理员页面-->
+
+        <el-aside width="200px" style="background-color: rgb(238, 241, 246)" v-if="user.type==='1'">
+          <el-menu :default-openeds="['1', '2','3','4','5']">
+            <el-submenu index="1">
+              <template slot="title"><i class="el-icon-message"></i>户籍管理</template>
+              <el-menu-item-group>
+                <el-menu-item index="1-2">
+                  <router-link v-bind:to="{path:'/index/profile',query:{id:11111}}" tag="label" >户籍信息</router-link>
+                </el-menu-item>
+              </el-menu-item-group>
+
+              <el-menu-item-group>
+                <el-menu-item index="1-2">
+                  <router-link v-bind:to="{path:'/index/profile',query:{id:11111}}" tag="label" >用户信息</router-link>
+                </el-menu-item>
+              </el-menu-item-group>
+
+              <el-menu-item-group>
+                <el-menu-item index="1-2">
+                  <router-link v-bind:to="{path:'/index/profile',query:{id:11111}}" tag="label" >迁出/迁出管理</router-link>
+                </el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
+
+            <el-submenu index="2">
+              <template slot="title"><i class="el-icon-menu"></i>缴费</template>
+              <el-menu-item-group>
+                <el-menu-item index="1-2">
+                  <router-link to="/index/houseHolder" tag="label">缴费信息</router-link>
+                </el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
+
+
+            <el-submenu index="4">
+              <template slot="title"><i class="el-icon-setting"></i>反馈投诉</template>
+              <el-menu-item-group >
+                <el-menu-item index="1-2">
+                  <router-link to="/index/comment" tag="label">反馈投诉</router-link>
+                </el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
+
+
+          </el-menu>
+
+        </el-aside>
+
+      <!--      普通用户页面-->
+       <el-aside width="200px" style="background-color: rgb(238, 241, 246)" v-else>
+        <el-menu :default-openeds="['1']">
           <el-submenu index="1">
-            <template slot="title"><i class="el-icon-message"></i>系统用户管理</template>
+            <template slot="title"><i class="el-icon-message"></i>个人户籍管理</template>
             <el-menu-item-group>
               <el-menu-item index="1-2">
-                <router-link v-bind:to="{path:'/index/profile',query:{id:11111}}" tag="label" >修改信息</router-link>
+                <router-link v-bind:to="{path:'/index/houseHolder/Info',query:{id:user.id}}" tag="label" >户籍信息</router-link>
               </el-menu-item>
             </el-menu-item-group>
-          </el-submenu>
-
-          <el-submenu index="2">
-            <template slot="title"><i class="el-icon-menu"></i>户籍管理</template>
-            <el-menu-item-group>
-              <el-menu-item index="1-2">
-                <router-link to="/index/houseHolder" tag="label">户籍管理</router-link>
-              </el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
-
-          <el-submenu index="3">
-            <template slot="title"><i class="el-icon-setting"></i>个人户籍管理</template>
             <el-menu-item-group >
               <el-menu-item index="1-2">
-                <router-link v-bind:to="{name:'personal',params:{id:123}}" tag="label">个人户籍管理</router-link>
+                <router-link v-bind:to="{name:'moveIn',query:{id:user.id}}" tag="label">迁入查询</router-link>
               </el-menu-item>
             </el-menu-item-group>
-          </el-submenu>
+            <el-menu-item-group >
+              <el-menu-item index="1-2">
+                <router-link v-bind:to="{name:'moveOut',query:{id:user.id}}" tag="label">迁出查询</router-link>
+              </el-menu-item>
+            </el-menu-item-group>
 
-          <el-submenu index="4">
-            <template slot="title"><i class="el-icon-setting"></i>反馈投诉</template>
             <el-menu-item-group >
               <el-menu-item index="1-2">
                 <router-link to="/index/comment" tag="label">反馈投诉</router-link>
@@ -68,17 +102,22 @@
           </el-submenu>
 
 
-<!--          <el-submenu index="5">-->
-<!--            <template slot="title"><i class="el-icon-setting"></i>test</template>-->
-<!--            <el-menu-item-group >-->
-<!--              <el-menu-item index="1-2">-->
-<!--                <router-link to="/index/avatar" >test</router-link>-->
-<!--              </el-menu-item>-->
-<!--            </el-menu-item-group>-->
-<!--          </el-submenu>-->
+
+
+
+
+          <!--          <el-submenu index="5">-->
+          <!--            <template slot="title"><i class="el-icon-setting"></i>test</template>-->
+          <!--            <el-menu-item-group >-->
+          <!--              <el-menu-item index="1-2">-->
+          <!--                <router-link to="/index/avatar" >test</router-link>-->
+          <!--              </el-menu-item>-->
+          <!--            </el-menu-item-group>-->
+          <!--          </el-submenu>-->
         </el-menu>
 
       </el-aside>
+
 
       <el-container>
         <el-main>
@@ -138,6 +177,8 @@ export default {
             this.$router.replace("/")
           }
         })
+      }else if (command==="profile"){
+          this.$router.replace({path:'/index/profile',query:{id:this.user.id}})
       }
     }
   },

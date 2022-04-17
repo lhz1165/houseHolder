@@ -1,7 +1,5 @@
 <template>
 <div>
-
-
   <el-form ref="form" :model="form" label-width="80px">
     <div class="myavatar">
       <el-upload
@@ -18,20 +16,34 @@
     </div>
     <div class="myform">
       <el-form-item label="用户名" >
-        <el-input v-model="form.name"></el-input>
+        <el-input v-model="form.username" disabled></el-input>
       </el-form-item>
 
-      <el-form-item label="密码" >
-        <el-input v-model="form.password"></el-input>
-      </el-form-item>
 
-      <el-form-item label="即时配送">
-        <el-switch v-model="form.delivery"></el-switch>
-      </el-form-item>
+      <el-button type="text" @click="dialogFormVisible = true">修改密码</el-button>
+
+      <el-dialog title="修改密码" :visible.sync="dialogFormVisible">
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+
+          <el-form-item label="密码" prop="pass">
+            <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="确认密码" prop="checkPass">
+            <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="submitForm('ruleForm')">确认</el-button>
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+        </div>
+      </el-dialog>
+
+
+
 
       <el-form-item>
         <el-button type="primary" @click="onSubmit">更新</el-button>
-        <el-button>取消</el-button>
+        <el-button @click="onSubmitExit">返回</el-button>
       </el-form-item>
     </div>
 
@@ -46,18 +58,52 @@ import {getRequest, postRequest} from "@/utils/apis";
 export default {
   name: "UserInfo",
   data() {
+    var validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入密码'));
+      } else {
+        if (this.ruleForm.checkPass !== '') {
+          this.$refs.ruleForm.validateField('checkPass');
+        }
+        callback();
+      }
+    };
+    var validatePass2 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'));
+      } else if (value !== this.ruleForm.pass) {
+        callback(new Error('两次输入密码不一致!'));
+      } else {
+        callback();
+      }
+    };
     return {
       form: {
+        username: '',
       },
       headers: {
         'token': window.sessionStorage.getItem("token")
       },
-      picName:'',
+      picName: '',
       //用户更新的参数
-      userParam:{
-        id:0,
-        picAddr:'',
-      }
+      userParam: {
+        id: 0,
+        picAddr: '',
+      },
+      dialogFormVisible: false,
+      ruleForm: {
+        pass: '',
+        checkPass: '',
+        age: ''
+      },
+      rules: {
+        pass: [
+          { validator: validatePass, trigger: 'blur' }
+        ],
+        checkPass: [
+          { validator: validatePass2, trigger: 'blur' }
+        ],
+      },
     }
   },
   mounted() {
@@ -65,6 +111,7 @@ export default {
     let userObj =JSON.parse(window.sessionStorage.getItem("user"))
     this.userParam.id=userObj.id
     this.userParam.picAddr=userObj.avatar
+    this.form.username=userObj.username
   },
   methods:{
     //初始化头像
@@ -81,11 +128,44 @@ export default {
      postRequest("/user/update",this.userParam)
       .then(resp=>{
         if (resp.data.code === 200) {
-          this.$message.success("更新成功!")
-          this.picName= "http://localhost:8089"+this.userParam.picAddr
+          if (resp.data.data != null) {
+            this.$message.success("更新成功!");
+            this.picName= "http://localhost:8089"+this.userParam.picAddr
+          }else {
+            this.$message.success(resp.data.message);
+          }
+
+
         }
       })
       this.$router.go(0)
+    },
+    onSubmitExit(){
+     this.$router.replace({path:"/index/houseHolder/Info",query:{id:JSON.parse(window.sessionStorage.getItem("user")).id}})
+    },
+    submitForm(formName) {
+      //
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          postRequest("/user/updatePass",{
+            id:this.userParam.id,
+            password:this.ruleForm.pass,
+            password2:this.ruleForm.checkPass,
+          }).then(resp=>{
+            if (resp.data.code === 200) {
+                this.$message.success("更新成功!");
+                this.dialogFormVisible = false
+            }else {
+              this.$message.error("操作失败!");
+              this.dialogFormVisible = false
+            }
+          })
+
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
     },
 
     handleAvatarSuccess(res, file) {
@@ -109,7 +189,8 @@ export default {
       }
       return isJPG && isLt2M;
     }
-  }
+  },
+
 }
 </script>
 

@@ -11,7 +11,13 @@ import houserHolderInfo from "@/components/HouserHolderInfo";
 import comment from "@/components/Comment";
 import commentInfo from "@/components/CommentInfo";
 import addCommentInfo from "@/components/AddCommentInfo";
+import moveIn from "@/components/MoveIn";
+import moveOut from "@/components/MoveOut";
+
+
 Vue.use(VueRouter)
+
+
 
 const routes = [
   {
@@ -33,7 +39,7 @@ const routes = [
   },
 
   {
-    path: '/index/:username',
+    path: '/index',
     name: 'main',
     component: index,
     props:true,
@@ -47,6 +53,7 @@ const routes = [
         path:'/index/houseHolder/info',
         name:"houseHolderInfo",
         component:houserHolderInfo,
+        props:true
       },
       {
         path: '/index/personal/:id',
@@ -82,6 +89,20 @@ const routes = [
         path: '/index/addComment',
         name:"addCommentInfo",
         component: addCommentInfo,
+        props:true
+      },
+
+      {
+        path: '/index/moveIn',
+        name:"moveIn",
+        component: moveIn,
+        props:true
+      },
+
+      {
+        path: '/index/moveOut',
+        name:"moveOut",
+        component: moveOut,
         props:true
       },
 

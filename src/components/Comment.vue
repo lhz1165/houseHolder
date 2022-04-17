@@ -46,15 +46,6 @@
         </template>
       </el-table-column>
     </el-table>
-
-<!--    <el-pagination-->
-<!--        class="pagination"-->
-<!--        background-->
-<!--        layout="prev, pager, next"-->
-<!--        :pageSize="pageSize"-->
-<!--        :total="total"-->
-<!--        @current-change="change">-->
-<!--    </el-pagination>-->
     <div class="pageP">
       <el-pagination
           class="pagination"
@@ -65,9 +56,6 @@
           @current-change="change">
       </el-pagination>
     </div>
-
-
-
   </div>
 
 </template>
@@ -87,14 +75,20 @@ export default {
     }
   },
   mounted() {
-  this.pageQuery();
+    let userObj = JSON.parse(window.sessionStorage.getItem("user"));
+    console.log(userObj)
+    if (userObj != null && userObj.type === "2") {
+      this.userName = userObj.username;
+    }
+    this.pageQuery();
   },
   methods:{
+
     indexMethod(index) {
       return index+1 ;
     },
     pageQuery(){
-      postRequest("/comment/page", {pageSize: this.pageSize, current: this.pageNum,userName:this.userName})
+      postRequest("/comment/page", {pageSize: this.pageSize, current: this.pageNum,username:this.userName})
           .then(resp=>{
             if (resp.data.code === 200) {
               this.list=resp.data.data.records;
