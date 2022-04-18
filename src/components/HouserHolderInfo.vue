@@ -1,13 +1,12 @@
 <template>
   <div>
-
     <el-descriptions class="margin-top" title="个人信息" :column="3" size="medium" border>
       <el-descriptions-item>
         <template slot="label">
           <i class="el-icon-user"></i>
           姓名
         </template>
-        kooriookami
+        <input type="text" value="18100000000"/>
       </el-descriptions-item>
 
       <el-descriptions-item>
@@ -15,7 +14,7 @@
           <i class="el-icon-user"></i>
           性别
         </template>
-        kooriookami
+        <input type="text" value="18100000000"/>
       </el-descriptions-item>
       <el-descriptions-item>
         <template slot="label">
