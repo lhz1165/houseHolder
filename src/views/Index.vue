@@ -31,29 +31,29 @@
             <el-submenu index="1">
               <template slot="title"><i class="el-icon-message"></i>户籍管理</template>
               <el-menu-item-group>
-                <el-menu-item index="1-2">
-                  <router-link v-bind:to="{path:'/index/houseHoldList'}" tag="label" >户籍信息</router-link>
+                <el-menu-item index="1-2" @click="jump('/index/houseHoldList')">
+                  户籍信息
                 </el-menu-item>
               </el-menu-item-group>
 
               <el-menu-item-group>
-                <el-menu-item index="1-2">
-                  <router-link v-bind:to="{path:'/index/userInfoList'}" tag="label" >居民信息</router-link>
+                <el-menu-item index="1-2" @click="jump('/index/userInfoList')">
+                  居民信息
                 </el-menu-item>
               </el-menu-item-group>
 
               <el-menu-item-group>
-                <el-menu-item index="1-2">
-                  <router-link v-bind:to="{path:'/index/moveList'}" tag="label" >迁出/迁出管理</router-link>
+                <el-menu-item index="1-2"@click="jump('/index/moveList')" >
+                  迁出/迁出管理
                 </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
 
-            <el-submenu index="2">
+            <el-submenu index="2" >
               <template slot="title"><i class="el-icon-menu"></i>缴费</template>
               <el-menu-item-group>
-                <el-menu-item index="1-2">
-                  <router-link to="/index/houseHolder" tag="label">缴费信息</router-link>
+                <el-menu-item index="1-2" @click="jump('/index/moveList')">
+                  缴费信息
                 </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
@@ -62,8 +62,9 @@
             <el-submenu index="4">
               <template slot="title"><i class="el-icon-setting"></i>反馈投诉</template>
               <el-menu-item-group >
-                <el-menu-item index="1-2">
-                  <router-link to="/index/comment" tag="label">反馈投诉</router-link>
+                <el-menu-item index="1-2" @click="jump('/index/comment')">
+<!--                  <router-link to="/index/comment" tag="label">反馈投诉</router-link>-->
+                  反馈投诉
                 </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
@@ -180,6 +181,9 @@ export default {
       }else if (command==="profile"){
           this.$router.replace({path:'/index/profile',query:{id:this.user.id}})
       }
+    },
+    jump(url){
+      this.$router.replace(url)
     }
   },
 }
