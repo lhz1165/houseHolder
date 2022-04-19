@@ -32,19 +32,19 @@
               <template slot="title"><i class="el-icon-message"></i>户籍管理</template>
               <el-menu-item-group>
                 <el-menu-item index="1-2">
-                  <router-link v-bind:to="{path:'/index/profile',query:{id:11111}}" tag="label" >户籍信息</router-link>
+                  <router-link v-bind:to="{path:'/index/houseHoldList'}" tag="label" >户籍信息</router-link>
                 </el-menu-item>
               </el-menu-item-group>
 
               <el-menu-item-group>
                 <el-menu-item index="1-2">
-                  <router-link v-bind:to="{path:'/index/profile',query:{id:11111}}" tag="label" >用户信息</router-link>
+                  <router-link v-bind:to="{path:'/index/userInfoList'}" tag="label" >居民信息</router-link>
                 </el-menu-item>
               </el-menu-item-group>
 
               <el-menu-item-group>
                 <el-menu-item index="1-2">
-                  <router-link v-bind:to="{path:'/index/profile',query:{id:11111}}" tag="label" >迁出/迁出管理</router-link>
+                  <router-link v-bind:to="{path:'/index/moveList'}" tag="label" >迁出/迁出管理</router-link>
                 </el-menu-item>
               </el-menu-item-group>
             </el-submenu>

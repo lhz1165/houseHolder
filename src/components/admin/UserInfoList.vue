@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="addComm">
-      <el-button type="primary" icon="el-icon-circle-plus" @click="addHouseHold()">添加户籍</el-button>
+      <el-button type="primary" icon="el-icon-circle-plus" @click="addUserInfo()">添加用户</el-button>
 
     </div>
     <el-table
@@ -11,27 +11,41 @@
         max-height="500px"
         :cell-style="{padding:'2px 0'}"
         :row-style="{height:'20px'}">
+
       <el-table-column
           prop="id"
-          label="户号"
+          label="id"
           width="180">
       </el-table-column>
 
       <el-table-column
-          prop="householder"
-          label="户主名"
+          prop="username"
+          label="用户名"
           width="180">
       </el-table-column>
       <el-table-column
-          prop="address"
-          label="户籍地址"
+          prop="realName"
+          label="真实姓名"
           width="180">
       </el-table-column>
 
       <el-table-column
-          prop="peopleCount"
-          label="总人数">
+          prop="identity"
+          label="身份证">
       </el-table-column>
+
+      <el-table-column
+          prop="phone"
+          label="联系电话">
+      </el-table-column>
+
+      <el-table-column
+          prop="status"
+          label="状态">
+      </el-table-column>
+
+
+
 
       <el-table-column
           fixed="right"
@@ -61,7 +75,7 @@
 import {postRequest} from "@/utils/apis";
 
 export default {
-  name: "HouseHoldList",
+  name: "UserInfoList",
   data(){
     return {
       list: [],
@@ -75,37 +89,47 @@ export default {
   },
   methods:{
     pageQuery(){
-      postRequest("/houseHold/page", {pageSize: this.pageSize, current: this.pageNum})
+      postRequest("/userInfo/page", {pageSize: this.pageSize, current: this.pageNum})
           .then(resp=>{
             if (resp.data.code === 200) {
               this.list=resp.data.data.records;
               this.total=resp.data.data.total;
               this.size=resp.data.data.size;
               this.pages=resp.data.data.pages;
+              for (let i=0;i<this.list.length;i++)
+              {
+                let datatime = parseInt(this.list[i].birthday);
+                this.list[i].birthday=(new Date(datatime).toLocaleString());
+                let status = this.list[i].status
+                if (status === "1") {
+                  this.list[i].status="已迁入"
+                }else if (status === "2"){
+                  this.list[i].status="已迁出"
+                }else {
+                  this.list[i].status="已注销"
+
+                }
+
+
+              }
             }})
     },
     change(pageNum) {
       this.pageNum = pageNum;
       this.pageQuery();
     },
-    addHouseHold(){
-      this.$router.replace("/index/addHouseHold")
+    addUserInfo(){
+      this.$router.replace("/index/addUserInfo")
     },
     handleClick(row){
-      this.$router.replace({path:"/index/addHouseHold",query:{hid:row.id}})
+      this.$router.replace({path:"/index/addUserInfo",query:{uid:row.id}})
     }
-
   }
+
+
 }
 </script>
 
 <style scoped>
-.pagination {
-  position: fixed;
-  left: 50px;
-  bottom: 100px;
-  height: 40px;
-  width: 100%;
-  text-align: center;
-}
+
 </style>

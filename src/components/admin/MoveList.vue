@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="addComm">
-      <el-button type="primary" icon="el-icon-circle-plus" @click="addHouseHold()">添加户籍</el-button>
+      <el-button type="primary" icon="el-icon-circle-plus" @click="addMove()">迁出/迁出</el-button>
 
     </div>
     <el-table
@@ -13,24 +13,34 @@
         :row-style="{height:'20px'}">
       <el-table-column
           prop="id"
-          label="户号"
+          label="编号"
           width="180">
       </el-table-column>
 
       <el-table-column
           prop="householder"
-          label="户主名"
+          label="用户名"
           width="180">
       </el-table-column>
       <el-table-column
           prop="address"
-          label="户籍地址"
+          label="户籍号"
           width="180">
       </el-table-column>
 
       <el-table-column
           prop="peopleCount"
-          label="总人数">
+          label="操作时间">
+      </el-table-column>
+
+      <el-table-column
+          prop="peopleCount"
+          label="类型">
+      </el-table-column>
+
+      <el-table-column
+          prop="peopleCount"
+          label="状态">
       </el-table-column>
 
       <el-table-column
@@ -54,14 +64,11 @@
       </el-pagination>
     </div>
   </div>
-
 </template>
 
 <script>
-import {postRequest} from "@/utils/apis";
-
 export default {
-  name: "HouseHoldList",
+  name: "MoveList",
   data(){
     return {
       list: [],
@@ -71,41 +78,20 @@ export default {
     }
   },
   mounted() {
-    this.pageQuery();
+
   },
   methods:{
-    pageQuery(){
-      postRequest("/houseHold/page", {pageSize: this.pageSize, current: this.pageNum})
-          .then(resp=>{
-            if (resp.data.code === 200) {
-              this.list=resp.data.data.records;
-              this.total=resp.data.data.total;
-              this.size=resp.data.data.size;
-              this.pages=resp.data.data.pages;
-            }})
-    },
     change(pageNum) {
       this.pageNum = pageNum;
       this.pageQuery();
     },
-    addHouseHold(){
-      this.$router.replace("/index/addHouseHold")
-    },
-    handleClick(row){
-      this.$router.replace({path:"/index/addHouseHold",query:{hid:row.id}})
-    }
+    addMove(){
 
+    }
   }
 }
 </script>
 
 <style scoped>
-.pagination {
-  position: fixed;
-  left: 50px;
-  bottom: 100px;
-  height: 40px;
-  width: 100%;
-  text-align: center;
-}
+
 </style>

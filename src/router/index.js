@@ -12,8 +12,13 @@ import comment from "@/components/Comment";
 import commentInfo from "@/components/CommentInfo";
 import addCommentInfo from "@/components/AddCommentInfo";
 import moveIn from "@/components/MoveIn";
-import moveOut from "@/components/MoveOut";
-
+import moveOut from "@/components/MoveOut"
+import houseHoldList from "@/components/admin/HouseHoldList";
+import addHouseHold from "@/components/admin/AddHouseHold";
+import userInfoList from "@/components/admin/UserInfoList";
+import addUserInfo from "@/components/admin/AddUserInfo";
+import move from "@/components/admin/Move";
+import moveList from "@/components/admin/MoveList";
 
 Vue.use(VueRouter)
 
@@ -103,6 +108,46 @@ const routes = [
         path: '/index/moveOut',
         name:"moveOut",
         component: moveOut,
+        props:true
+      },
+
+      {
+        path: '/index/houseHoldList',
+        name:"houseHoldList",
+        component: houseHoldList,
+        props:true
+      },
+
+      {
+        path: '/index/addHouseHold',
+        name:"addHouseHold",
+        component: addHouseHold,
+        props:true
+      },
+
+      {
+        path: '/index/userInfoList',
+        name:"userInfoList",
+        component: userInfoList,
+        props:true
+      },
+
+      {
+        path: '/index/addUserInfo',
+        name:"addUserInfo",
+        component: addUserInfo,
+        props:true
+      },
+      {
+        path: '/index/move',
+        name:"move",
+        component: move,
+        props:true
+      },
+      {
+        path: '/index/moveList',
+        name:"moveList",
+        component: moveList,
         props:true
       },
 

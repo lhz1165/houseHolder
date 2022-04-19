@@ -46,7 +46,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="pageP">
+    <div >
       <el-pagination
           class="pagination"
           background
@@ -155,7 +155,5 @@ export default {
   width: 100%;
   text-align: center;
 }
-/*.pageP{*/
-/*  margin-bottom: 50px;*/
-/*}*/
+
 </style>
