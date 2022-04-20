@@ -58,7 +58,7 @@ export default {
     }
   },
   mounted() {
-    let userObj = JSON.parse(window.sessionStorage.getItem("user"));
+    let userObj = JSON.parse(window.localStorage.getItem("user"));
     if (userObj != null) {
       this.username=userObj.username
     }

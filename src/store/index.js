@@ -3,7 +3,7 @@ import Vuex from "vuex"
 
 Vue.use(Vuex)
 
-const state=null!=window.sessionStorage.getItem('state')?JSON.parse(window.sessionStorage.getItem('state')): {
+const state=null!=window.localStorage.getItem('state')?JSON.parse(window.localStorage.getItem('state')): {
     user:{
         name:''
     }

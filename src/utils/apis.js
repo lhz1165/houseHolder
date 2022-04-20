@@ -4,9 +4,9 @@ import router from "@/router";
 
 axios.interceptors.request.use(config => {
         console.log("config is url"+config.url)
-        if (window.sessionStorage.getItem('token')) {
+        if (window.localStorage.getItem('token')) {
             //在请求头加入token，名字要和后端接收请求头的token名字一样
-            config.headers.token=window.sessionStorage.getItem('token');
+            config.headers.token=window.localStorage.getItem('token');
         }
         return config;
     },

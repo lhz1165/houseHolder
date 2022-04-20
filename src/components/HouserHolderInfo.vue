@@ -4,38 +4,38 @@
       <el-descriptions-item>
         <template slot="label">
           <i class="el-icon-user"></i>
-          姓名
+         姓名
         </template>
-        <input type="text" value="18100000000"/>
+        {{userinfo.realName}}
       </el-descriptions-item>
 
-      <el-descriptions-item>
+      <el-descriptions-item >
         <template slot="label">
           <i class="el-icon-user"></i>
           性别
         </template>
-        <input type="text" value="18100000000"/>
+        {{userinfo.gender}}
       </el-descriptions-item>
       <el-descriptions-item>
         <template slot="label">
           <i class="el-icon-mobile-phone"></i>
           手机号
         </template>
-        18100000000
+        {{userinfo.phone}}
       </el-descriptions-item>
       <el-descriptions-item>
         <template slot="label">
           <i class="el-icon-location-outline"></i>
           籍贯
         </template>
-        苏州市
+        {{userinfo.place}}
       </el-descriptions-item>
       <el-descriptions-item>
         <template slot="label">
           <i class="el-icon-tickets"></i>
           民族
         </template>
-        <el-tag size="small">学校</el-tag>
+        <el-tag size="small"> {{userinfo.race}}</el-tag>
       </el-descriptions-item>
 
       <el-descriptions-item>
@@ -43,35 +43,35 @@
           <i class="el-icon-user"></i>
           生日
         </template>
-        kooriookami
+        {{userinfo.birthday}}
       </el-descriptions-item>
       <el-descriptions-item>
         <template slot="label">
           <i class="el-icon-user"></i>
           身份证
         </template>
-        kooriookami
+        {{userinfo.identity}}
       </el-descriptions-item>
       <el-descriptions-item>
         <template slot="label">
           <i class="el-icon-user"></i>
           户籍状态
         </template>
-        kooriookami
+        {{userinfo.status}}
       </el-descriptions-item>
       <el-descriptions-item>
         <template slot="label">
           <i class="el-icon-user"></i>
           户籍号
         </template>
-        kooriookami
+        {{userinfo.householderId}}
       </el-descriptions-item>
       <el-descriptions-item>
         <template slot="label">
           <i class="el-icon-office-building"></i>
           联系地址
         </template>
-        江苏省苏州市吴中区吴中大道 1188 号
+        {{userinfo.address}}
       </el-descriptions-item>
 
     </el-descriptions>
@@ -82,50 +82,23 @@
           <i class="el-icon-user"></i>
           户主名
         </template>
-        kooriookami
+        {{ userinfo.householder }}
       </el-descriptions-item>
 
-      <el-descriptions-item>
-        <template slot="label">
-          <i class="el-icon-user"></i>
-          组号
-        </template>
-        kooriookami
-      </el-descriptions-item>
       <el-descriptions-item>
         <template slot="label">
           <i class="el-icon-mobile-phone"></i>
           户籍地址
         </template>
-        18100000000
+        {{ userinfo.houseAddress }}
       </el-descriptions-item>
-      <el-descriptions-item>
-        <template slot="label">
-          <i class="el-icon-location-outline"></i>
-          籍贯
-        </template>
-        苏州市
-      </el-descriptions-item>
-      <el-descriptions-item>
-        <template slot="label">
-          <i class="el-icon-tickets"></i>
-          人数
-        </template>
-        <el-tag size="small">学校</el-tag>
-      </el-descriptions-item>
-      <el-descriptions-item>
-        <template slot="label">
-          <i class="el-icon-user"></i>
-          户号
-        </template>
-        kooriookami
-      </el-descriptions-item>
+
       <el-descriptions-item>
         <template slot="label">
           <i class="el-icon-user"></i>
           备注
         </template>
-        kooriookami
+        {{ userinfo.description }}
       </el-descriptions-item>
 
 
@@ -137,26 +110,55 @@
 </template>
 
 <script>
+import {getRequest} from "@/utils/apis";
+
 export default {
   name: "HouserHolderInfo",
   data() {
     return {
-      form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
-      }
+      userinfo:{
+        address: "",
+        birthday: "",
+        gender: "",
+        houseAddress: '',
+        householder: '',
+        householderId: '',
+        id: '',
+        identity: "",
+        password: "",
+        phone: "",
+        place: "",
+        race: "",
+        realName: "",
+        status: "",
+        type: "",
+        userId: '',
+        username: "",
+        description:"",
+
+      },
+      username:'',
     }
   },
+  mounted() {
+    this.username=this.$route.query.username
+    this.queryInfo()
+
+  },
   methods: {
+
     onSubmit() {
       console.log('submit!');
-    }
+    },
+    queryInfo(){
+      console.log(this.username)
+      getRequest("/userInfo/getByUserName",{username:this.username})
+      .then(resp=>{
+        if (resp.data.code === 200) {
+          this.userinfo=resp.data.data
+        }
+      })
+    },
   }
 }
 </script>

@@ -39,13 +39,27 @@
           label="联系电话">
       </el-table-column>
 
+
       <el-table-column
           prop="status"
-          label="状态">
+          label="户籍状态"
+          width="100"
+          filter-placement="bottom-end">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.status === '迁入' ? 'success' : 'info'" disable-transitions>{{scope.row.status}}</el-tag>
+        </template>
       </el-table-column>
 
-
-
+      <el-table-column
+          prop="type"
+          label="居住类型"
+          width="100"
+          filter-placement="bottom-end">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.type === '常住' ? 'primary' : 'info'"
+                  disable-transitions>{{scope.row.type}}</el-tag>
+        </template>
+      </el-table-column>
 
       <el-table-column
           fixed="right"
@@ -102,11 +116,11 @@ export default {
                 this.list[i].birthday=(new Date(datatime).toLocaleString());
                 let status = this.list[i].status
                 if (status === "1") {
-                  this.list[i].status="已迁入"
+                  this.list[i].status="迁入"
                 }else if (status === "2"){
-                  this.list[i].status="已迁出"
+                  this.list[i].status="迁出"
                 }else {
-                  this.list[i].status="已注销"
+                  this.list[i].status="注销"
 
                 }
 

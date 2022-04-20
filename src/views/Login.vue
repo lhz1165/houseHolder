@@ -58,9 +58,9 @@ export default {
                 if (successResponse.data.code === 200) {
                   this.$message.success('登录成功!')
                   //跳转
-                  window.sessionStorage.clear();
-                  window.sessionStorage.setItem('isLogin','true')
-                  window.sessionStorage.setItem('token',successResponse.data.data)
+                  window.localStorage.clear();
+                  window.localStorage.setItem('isLogin','true')
+                  window.localStorage.setItem('token',successResponse.data.data)
                   // this.$store.dispatch('asyncUpdateUser',{
                   //   name:this.form.username
                   // })

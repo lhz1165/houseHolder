@@ -15,22 +15,20 @@ Vue.config.productionTip = false
 Vue.prototype.axios=axios
 
 
-// router.beforeEach((to,from,next)=>{
-//   let isLogin = window.sessionStorage.getItem("isLogin");
-//   if (to.path==='/logout'){
-//     window.sessionStorage.clear();
-//     next('/login')
-//   }else if(to.path==='/login'){
-//     if (isLogin != null) {
-//       next('/index/aaa')
-//     }
-//   }else if(isLogin===null){
-//     next('/login')
-//   }
-//   next();
-// })
-
-
+router.beforeEach((to,from,next)=>{
+  let isLogin = window.localStorage.getItem("isLogin");
+  if (to.path==='/logout'){
+    window.localStorage.clear();
+    next('/login')
+  }else if(to.path==='/login'){
+    if (isLogin != null) {
+      next('/index')
+    }
+  }else if(isLogin===null){
+    next('/login')
+  }
+  next();
+})
 new Vue({
   router,
  // store,

@@ -52,7 +52,7 @@
             <el-submenu index="2" >
               <template slot="title"><i class="el-icon-menu"></i>缴费</template>
               <el-menu-item-group>
-                <el-menu-item index="1-2" @click="jump('/index/moveList')">
+                <el-menu-item index="1-2" @click="jump('/index/payment')">
                   缴费信息
                 </el-menu-item>
               </el-menu-item-group>
@@ -80,20 +80,26 @@
           <el-submenu index="1">
             <template slot="title"><i class="el-icon-message"></i>个人户籍管理</template>
             <el-menu-item-group>
-              <el-menu-item index="1-2">
-                <router-link v-bind:to="{path:'/index/houseHolder/Info',query:{id:user.id}}" tag="label" >户籍信息</router-link>
+
+
+              <el-menu-item index="1-2" @click="jumpUser('/index/houseHolder/Info',user.username)">
+<!--                <router-link v-bind:to="{path:'/index/houseHolder/Info',query:{id:user.id}}" tag="label" >户籍信息</router-link>-->
+                户籍信息
               </el-menu-item>
             </el-menu-item-group>
             <el-menu-item-group >
-              <el-menu-item index="1-2">
-                <router-link v-bind:to="{name:'moveIn',query:{id:user.id}}" tag="label">迁入查询</router-link>
+              <el-menu-item index="1-2" @click="jumpUser('/index/moveList',user.username)">
+                迁入/迁出查询
               </el-menu-item>
             </el-menu-item-group>
-            <el-menu-item-group >
-              <el-menu-item index="1-2">
-                <router-link v-bind:to="{name:'moveOut',query:{id:user.id}}" tag="label">迁出查询</router-link>
-              </el-menu-item>
-            </el-menu-item-group>
+
+
+              <el-menu-item-group>
+                <el-menu-item index="1-2" @click="jumpUser('/index/payment',user.username)">
+                  缴费信息
+                </el-menu-item>
+              </el-menu-item-group>
+
 
             <el-menu-item-group >
               <el-menu-item index="1-2">
@@ -162,8 +168,8 @@ export default {
       .then(resp=>{
         if (resp.data.code===200){
           this.user=resp.data.data;
-          window.sessionStorage.removeItem("user")
-          window.sessionStorage.setItem("user",JSON.stringify(resp.data.data))
+          window.localStorage.removeItem("user")
+          window.localStorage.setItem("user",JSON.stringify(resp.data.data))
         }
       })
     },
@@ -173,7 +179,7 @@ export default {
         .then(resp=>{
           if (resp.data.code===200){
             this.$message.success('退出成功!')
-            window.sessionStorage.clear()
+            window.localStorage.clear()
             console.log("log out")
             this.$router.replace("/")
           }
@@ -184,6 +190,14 @@ export default {
     },
     jump(url){
       this.$router.replace(url)
+    },
+    jumpUser(url,username){
+      if (username != null) {
+        this.$router.replace({path:url,query:{username:username}});
+      }else {
+        this.$router.replace(url);
+      }
+
     }
   },
 }

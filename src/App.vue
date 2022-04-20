@@ -7,15 +7,16 @@
 
 export default {
   name:"app",
-  mounted() {
-    //刷新vuex消失
-    window.addEventListener('unload',this.saveState)
-  },
-  methods:{
-    saveState(){
-      sessionStorage.setItem('state',JSON.stringify(this.$store.state))
-    }
-  }
+  // mounted() {
+  //   //刷新vuex消失
+  //   window.addEventListener('unload',this.saveState)
+  // },
+  // methods:{
+  //   saveState(){
+  //     localStorage.setItem('state',JSON.stringify(this.$store.state))
+  //   }
+  // }
+
 }
 </script>
 <style>

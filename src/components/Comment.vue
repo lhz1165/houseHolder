@@ -75,7 +75,7 @@ export default {
     }
   },
   mounted() {
-    let userObj = JSON.parse(window.sessionStorage.getItem("user"));
+    let userObj = JSON.parse(window.localStorage.getItem("user"));
     console.log(userObj)
     if (userObj != null && userObj.type === "2") {
       this.userName = userObj.username;
@@ -93,7 +93,7 @@ export default {
             if (resp.data.code === 200) {
               this.list=resp.data.data.records;
               this.total=resp.data.data.total;
-              this.size=resp.data.data.size;
+              // this.size=resp.data.data.size;
               this.pages=resp.data.data.pages;
               for (var i=0;i<this.list.length;i++)
               {

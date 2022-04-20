@@ -82,7 +82,7 @@ export default {
         username: '',
       },
       headers: {
-        'token': window.sessionStorage.getItem("token")
+        'token': window.localStorage.getItem("token")
       },
       picName: '',
       //用户更新的参数
@@ -108,7 +108,7 @@ export default {
   },
   mounted() {
     this.loadAvatar();
-    let userObj =JSON.parse(window.sessionStorage.getItem("user"))
+    let userObj =JSON.parse(window.localStorage.getItem("user"))
     this.userParam.id=userObj.id
     this.userParam.picAddr=userObj.avatar
     this.form.username=userObj.username
@@ -141,7 +141,7 @@ export default {
       this.$router.go(0)
     },
     onSubmitExit(){
-     this.$router.replace({path:"/index/houseHolder/Info",query:{id:JSON.parse(window.sessionStorage.getItem("user")).id}})
+     this.$router.replace({path:"/index/houseHolder/Info",query:{id:JSON.parse(window.localStorage.getItem("user")).id}})
     },
     submitForm(formName) {
       //

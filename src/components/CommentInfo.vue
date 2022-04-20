@@ -90,8 +90,8 @@ export default {
           }
         }
       });
-      if (window.sessionStorage.getItem("user") != null) {
-        if (JSON.parse(window.sessionStorage.getItem("user")).type==="1"){
+      if (window.localStorage.getItem("user") != null) {
+        if (JSON.parse(window.localStorage.getItem("user")).type==="1"){
           this.readonly=false;
           this.edit=true;
         }
