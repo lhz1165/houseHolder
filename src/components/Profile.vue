@@ -24,8 +24,11 @@
 
       <el-dialog title="修改密码" :visible.sync="dialogFormVisible">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+          <el-form-item label="原密码" prop="pass">
+            <el-input type="password" v-model="ruleForm.oldPass" autocomplete="off"></el-input>
+          </el-form-item>
 
-          <el-form-item label="密码" prop="pass">
+          <el-form-item label="新密码" prop="pass">
             <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="确认密码" prop="checkPass">
@@ -94,6 +97,7 @@ export default {
       ruleForm: {
         pass: '',
         checkPass: '',
+        oldPass: '',
         age: ''
       },
       rules: {
@@ -124,21 +128,16 @@ export default {
             })
     },
     onSubmit() {
-      console.log(this.userParam)
      postRequest("/user/update",this.userParam)
       .then(resp=>{
         if (resp.data.code === 200) {
-          if (resp.data.data != null) {
             this.$message.success("更新成功!");
             this.picName= "http://localhost:8089"+this.userParam.picAddr
-          }else {
-            this.$message.success(resp.data.message);
-          }
-
-
+        }else {
+          this.$message.error(resp.data.msg);
         }
       })
-      this.$router.go(0)
+      location.reload()
     },
     onSubmitExit(){
      this.$router.replace({path:"/index/houseHolder/Info",query:{id:JSON.parse(window.localStorage.getItem("user")).id}})
@@ -149,6 +148,7 @@ export default {
         if (valid) {
           postRequest("/user/updatePass",{
             id:this.userParam.id,
+            oldPass:this.ruleForm.oldPass,
             password:this.ruleForm.pass,
             password2:this.ruleForm.checkPass,
           }).then(resp=>{
@@ -156,7 +156,7 @@ export default {
                 this.$message.success("更新成功!");
                 this.dialogFormVisible = false
             }else {
-              this.$message.error("操作失败!");
+              this.$message.error(resp.data.msg);
               this.dialogFormVisible = false
             }
           })
@@ -172,7 +172,6 @@ export default {
       console.log(res)
       if (res.code===200){
         this.userParam.picAddr=res.data
-        console.log(this.userParam)
         this.$message.success("上传成功!")
       }else {
         this.$message.error("上传失败!")

@@ -46,7 +46,7 @@
           width="100"
           filter-placement="bottom-end">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status === '迁入' ? 'success' : 'info'" disable-transitions>{{scope.row.status}}</el-tag>
+          <el-tag :type="scope.row.status === '迁入' ? 'success' : scope.row.status ==='注销'?'info':'warning'" disable-transitions>{{scope.row.status}}</el-tag>
         </template>
       </el-table-column>
 
@@ -67,7 +67,7 @@
           width="200">
         <template slot-scope="scope">
           <el-button @click="handleClick(scope.row)" type="text" size="small">编辑</el-button>
-          <el-button @click="deleteClick(scope.row)" type="text" size="small" >删除</el-button>
+          <el-button @click="operationUserinfo(scope.row)" type="text" size="small" >注销/恢复</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -137,7 +137,35 @@ export default {
     },
     handleClick(row){
       this.$router.replace({path:"/index/addUserInfo",query:{uid:row.id}})
+    },
+    operationUserinfo(row){
+      let nowStatus=0;
+      if (row.status === '注销') {
+        nowStatus = 2;
+      }else {
+        nowStatus = 3;
+      }
+
+      postRequest("/userInfo/deleteOrRecover",{
+        id:row.id,
+        status:nowStatus,
+      })
+          .then(resp=>{
+            if (resp.data.code === 200) {
+              if (row.status === '注销') {
+                this.$message.success("恢复成功");
+              }else {
+                this.$message.success("注销成功");
+
+              }
+              this.pageQuery();
+            }else if(resp.data.code === 500){
+              this.$message.success(resp.data.msg)
+            }
+          });
     }
+
+
   }
 
 

@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import {getRequest} from "@/utils/apis";
+
 export default {
   name: "InPay",
   data(){
@@ -39,6 +41,7 @@ export default {
   methods:{
     onSubmit(){
       this.$router.replace({path: "/index/paySuccess",query:{username:this.$route.query.username}})
+      getRequest("/move/pay",{id:this.no})
     }
   }
 }

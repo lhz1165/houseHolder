@@ -123,9 +123,9 @@ export default {
                   moveObj.status="待缴费"
                 }
                 if (moveObj.type === "1") {
-                  moveObj.type="迁出"
-                }else {
                   moveObj.type="迁入"
+                }else {
+                  moveObj.type="迁出"
                 }
 
                 let datatime = parseInt(this.list[i].createTime);
@@ -149,7 +149,15 @@ export default {
               if (resp.data.code === 200) {
                 this.$message.success("缴费成功!")
                 setTimeout(() =>{
-                  window.location.reload();
+                  // window.location.reload();
+                  let username =this.$route.query.username
+                  this.username=username
+                  if (username != null) {
+                    this.pageQuery(username);
+                  }else {
+                    this.pageQuery(null);
+                  }
+
                 },500);
               }else {
                 this.$message.error(resp.data.msg)

@@ -21,6 +21,10 @@
       <el-form-item label="地址">
         <el-input v-model="form.address" style="width: 500px"></el-input>
       </el-form-item>
+
+      <el-form-item label="描述">
+        <el-input v-model="form.description" style="width: 500px"></el-input>
+      </el-form-item>
       <br/>
       <div v-if="show">
         <i class="el-icon-user-solid"></i>
@@ -41,6 +45,7 @@
               prop="identity"
               label="身份证">
           </el-table-column>
+
         </el-table>
       </div>
 
@@ -72,7 +77,8 @@ export default {
        address:"",
        householder:"",
        id:0,
-       houseHoldUsers:[]
+       houseHoldUsers:[],
+       description:""
      },
       options: [],
       show:false
@@ -86,6 +92,7 @@ export default {
         this.form.id=hid
         this.form.householder=resp.data.data.householder
         this.form.address=resp.data.data.address
+        this.form.description=resp.data.data.description
         for (let i=0; i<resp.data.data.userInfos.length; i++){
           this.form.houseHoldUsers.push({
             id:resp.data.data.userInfos[i].id,
@@ -118,13 +125,14 @@ export default {
 
       postRequest("/houseHold/add",{
         householder:this.form.householder,
-        address:this.form.address
+        address:this.form.address,
+        description:this.form.description
       }).then(resp=>{
         if (resp.data.code === 200) {
           this.$message.success("新增成功!")
           this.$router.replace("/index/houseHoldList")
         }else {
-          this.$message.success("新增失败!")
+          this.$message.error(resp.data.msg)
         }
       })
 
@@ -133,7 +141,8 @@ export default {
       postRequest("/houseHold/update",{
         id:this.form.id,
         householder:this.form.householder,
-        address:this.form.address
+        address:this.form.address,
+         description:this.form.description
       }).then(resp=>{
         if (resp.data.code === 200) {
           this.$message.success("更新成功!")

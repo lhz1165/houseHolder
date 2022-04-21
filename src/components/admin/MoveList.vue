@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="addComm" v-if="this.username!=null">
+    <div class="addComm" v-if="this.username==null">
       <el-button type="primary" icon="el-icon-circle-plus" @click="addMove()">迁出/迁出</el-button>
     </div>
     <el-table
@@ -99,6 +99,7 @@ export default {
   },
   mounted() {
     let username =this.$route.query.username
+    this.username=username
     if (username != null) {
       this.pageQuery(username);
     }else {
@@ -132,9 +133,9 @@ export default {
               moveObj.status="待缴费"
             }
             if (moveObj.type === "1") {
-              moveObj.type="迁出"
-            }else {
               moveObj.type="迁入"
+            }else {
+              moveObj.type="迁出"
             }
 
             let datatime = parseInt(this.list[i].createTime);

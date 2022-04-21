@@ -125,9 +125,7 @@ export default {
       .then(resp=>{
         if (resp.data.code === 200) {
           this.$message.success('删除成功')
-          setTimeout(() =>{
-            window.location.reload();
-          },500);
+          this.pageQuery();
         }else {
           this.$message.error('删除失败')
         }

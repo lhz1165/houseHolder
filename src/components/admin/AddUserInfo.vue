@@ -1,8 +1,12 @@
 <template>
 <div>
   <el-form ref="form" :model="form" label-width="80px" style=" width: 600px; margin-left: 300px ">
-    <el-form-item label="户号" v-if="isEdit">
+    <el-form-item label="用户id" v-if="false">
       <el-input v-model="form.id" style="width: 500px" disabled></el-input>
+    </el-form-item>
+
+    <el-form-item label="户籍号" v-if="isEdit">
+      <el-input v-model="form.householderId" style="width: 500px" disabled></el-input>
     </el-form-item>
 
     <el-form-item label="用户名">
@@ -93,6 +97,7 @@ export default {
         birthday: '',
         address: '',
         gender: '',
+        householderId:''
       },
       isEdit:false
     }
