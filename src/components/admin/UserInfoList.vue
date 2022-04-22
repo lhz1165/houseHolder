@@ -39,6 +39,15 @@
           label="联系电话">
       </el-table-column>
 
+      <el-table-column
+          prop="paid"
+          label="是否生效">
+
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.paid=='生效' ? 'success' :'info'" disable-transitions>{{scope.row.paid}}</el-tag>
+        </template>
+      </el-table-column>
+
 
       <el-table-column
           prop="status"
@@ -121,7 +130,13 @@ export default {
                   this.list[i].status="迁出"
                 }else {
                   this.list[i].status="注销"
+                }
 
+                let paid = this.list[i].paid
+                if (paid ) {
+                  this.list[i].paid="生效"
+                } else {
+                  this.list[i].paid="未生效"
                 }
 
 
@@ -160,7 +175,7 @@ export default {
               }
               this.pageQuery();
             }else if(resp.data.code === 500){
-              this.$message.success(resp.data.msg)
+              this.$message.error(resp.data.msg)
             }
           });
     }

@@ -2,6 +2,7 @@
 <div class="homeWrapper">
 <!--  <el-container style=" border: 1px solid #eee">-->
   <el-container class="main_container">
+<!--头-->
     <el-header style=" font-size: 12px" class="homeHeader">
       <div class="title">户籍管理</div>
       <el-dropdown class="el-dropdown-link" @command="commandHandler">
@@ -11,7 +12,7 @@
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="profile">个人中心</el-dropdown-item>
-          <el-dropdown-item command="setting">设置</el-dropdown-item>
+<!--          <el-dropdown-item command="setting">设置</el-dropdown-item>-->
           <el-dropdown-item command="logout">
             退出
           </el-dropdown-item>
@@ -24,9 +25,8 @@
 
     <el-container>
 
-<!--      管理员页面-->
-
-        <el-aside width="200px" style="background-color: rgb(238, 241, 246)" v-if="user.type==='1'">
+        <!--管理员页面-->
+       <el-aside width="200px" style="background-color: rgb(238, 241, 246)" v-if="user.type==='1'">
           <el-menu :default-openeds="['1', '2','3','4','5']">
             <el-submenu index="1">
               <template slot="title"><i class="el-icon-message"></i>户籍管理</template>
@@ -74,7 +74,7 @@
 
         </el-aside>
 
-      <!--      普通用户页面-->
+        <!--普通用户页面-->
        <el-aside width="200px" style="background-color: rgb(238, 241, 246)" v-else>
         <el-menu :default-openeds="['1']">
           <el-submenu index="1">
@@ -113,14 +113,6 @@
 
 
 
-          <!--          <el-submenu index="5">-->
-          <!--            <template slot="title"><i class="el-icon-setting"></i>test</template>-->
-          <!--            <el-menu-item-group >-->
-          <!--              <el-menu-item index="1-2">-->
-          <!--                <router-link to="/index/avatar" >test</router-link>-->
-          <!--              </el-menu-item>-->
-          <!--            </el-menu-item-group>-->
-          <!--          </el-submenu>-->
         </el-menu>
 
       </el-aside>
@@ -135,7 +127,7 @@
     </el-container>
     <el-footer>
       <div>
-        @Copyright 2022 hello
+        @Copyright 2022 HDU-
       </div>
     </el-footer>
   </el-container>
@@ -180,7 +172,6 @@ export default {
           if (resp.data.code===200){
             this.$message.success('退出成功!')
             window.localStorage.clear()
-            console.log("log out")
             this.$router.replace("/")
           }
         })

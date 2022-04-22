@@ -19,7 +19,7 @@ import moveList from "@/components/admin/MoveList";
 import payMent from "@/components/PayMent";
 import inPay from "@/components/InPay"
 import paySuccess from "@/components/PaySuccess";
-
+import welcome from "@/views/Welcome";
 Vue.use(VueRouter)
 
 
@@ -34,7 +34,7 @@ const routes = [
   {
     path: '/',
     name: 'default',
-    redirect:'/login'
+    redirect:'/index'
   },
 
   {
@@ -47,12 +47,17 @@ const routes = [
     path: '/index',
     name: 'main',
     component: index,
+    redirect:"/index/welcome",
     props:true,
     //嵌套路由
     children: [
       {
         path: '/index/houseHolder',
         component: houseHolder,
+      },
+      {
+        path: '/index/welcome',
+        component: welcome,
       },
       {
         path:'/index/houseHolder/info',

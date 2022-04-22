@@ -97,7 +97,6 @@ export default {
       ruleForm: {
         pass: '',
         checkPass: '',
-        oldPass: '',
         age: ''
       },
       rules: {
@@ -140,7 +139,7 @@ export default {
       location.reload()
     },
     onSubmitExit(){
-     this.$router.replace({path:"/index/houseHolder/Info",query:{id:JSON.parse(window.localStorage.getItem("user")).id}})
+     this.$router.replace({path:"/index"})
     },
     submitForm(formName) {
       //

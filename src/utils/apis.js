@@ -3,7 +3,7 @@ import {Message} from "element-ui";
 import router from "@/router";
 
 axios.interceptors.request.use(config => {
-        console.log("config is url"+config.url)
+        // console.log("config is url"+config.url)
         if (window.localStorage.getItem('token')) {
             //在请求头加入token，名字要和后端接收请求头的token名字一样
             config.headers.token=window.localStorage.getItem('token');
