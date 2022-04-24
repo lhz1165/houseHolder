@@ -172,7 +172,7 @@ export default {
           if (resp.data.code===200){
             this.$message.success('退出成功!')
             window.localStorage.clear()
-            this.$router.replace("/")
+            this.$router.replace("/login")
           }
         })
       }else if (command==="profile"){
